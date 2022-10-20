@@ -14,20 +14,9 @@ pipeline{
         }
         stage('build'){
             steps{
-                sh ''
+                sh  "${params.DEPLOY_ENV}"'
             }
         }
 
     }
-
-
-
-
-
-
-
-
-
-
-    [
 }
