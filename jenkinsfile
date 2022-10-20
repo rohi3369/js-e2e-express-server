@@ -1,10 +1,12 @@
 pipeline{
-    agent {label "npm"
-    }
+    agent {label "npm"}
     parameters { 
         string(name: 'DEPLOY_ENV', defaultValue: 'npm install', description: 'my build ')
         choice(name: 'CHOICES', choices: ['main','develop'], description: 'branch')
     }
+    triggers {
+           pollSCM ('* * * * *')
+                }
     stages{
         stage('clone'){
             steps{
@@ -14,7 +16,7 @@ pipeline{
         }
         stage('build'){
             steps{
-                sh  "${params.DEPLOY_ENV}"'
+                sh  "${params.DEPLOY_ENV}"
             }
         }
 
