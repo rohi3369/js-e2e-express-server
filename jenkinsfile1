@@ -1,0 +1,24 @@
+pipeline{
+    agent {label 'maven'}
+    parameters { 
+        string(name: 'DEPLOY_ENV', defaultValue: 'npm install', description: 'my build ')
+        choice(name: 'CHOICES', choices: ['main','develop'], description: 'branch')
+    }
+    triggers {
+           pollSCM ('* * * * *')
+                }
+    stages{
+        stage('clone'){
+            steps{
+                git branch: "${params.CHOICES}",
+                url: 'https://github.com/rohi3369/js-e2e-express-server.git'
+            }
+        }
+        stage('build'){
+            steps{
+                sh  "${params.DEPLOY_ENV}"
+            }
+        }
+
+    }
+}
